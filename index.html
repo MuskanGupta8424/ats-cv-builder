@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATS CV · editable skill categories</title>
+    <title>ATS CV · +LinkedIn/GitHub/Portfolio (optional)</title>
     <style>
         /* --- GENERAL UI --- */
         * {
@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: #eef2f5;
             display: flex;
             height: 100vh;
@@ -26,7 +26,7 @@
             width: 42%;
             background: white;
             overflow-y: auto;
-            padding: 14px 16px;
+            padding: 28px 24px;
             box-shadow: 4px 0 20px rgba(0,0,0,0.06);
             border-right: 1px solid #dde3e9;
         }
@@ -54,7 +54,7 @@
 
         /* form elements */
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         label {
@@ -64,7 +64,18 @@
             letter-spacing: 0.3px;
             text-transform: uppercase;
             color: #2c455d;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
+        }
+
+        .optional-badge {
+            font-weight: 400;
+            text-transform: lowercase;
+            font-size: 0.7rem;
+            background: #e6edf5;
+            padding: 2px 8px;
+            border-radius: 30px;
+            margin-left: 8px;
+            color: #1e4a7a;
         }
 
         input, textarea {
@@ -89,7 +100,7 @@
             min-height: 80px;
         }
 
-        /* skills category manager */
+        /* skills category manager (unchanged) */
         .skills-category-card {
             background: #f9fbfd;
             border-radius: 20px;
@@ -253,77 +264,102 @@
             overflow-y: auto;
         }
 
+        /* ATS resume card – tight padding (8mm top/bottom, 10mm sides) */
         #resume-preview {
             background: white;
             width: 210mm;
             max-width: 100%;
             min-height: 297mm;
-            padding: 18mm 20mm;   /* normal padding, not excessive */
+            padding: 8mm 10mm;
             box-shadow: 0 16px 38px rgba(0,0,0,0.3);
             color: #1a2634;
-            font-family: 'Times New Roman', Times, serif;
+            font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
-        /* resume typography */
         #resume-preview h1 {
             font-size: 28px;
-            margin: 0 0 6px 0;
+            margin: 0 0 4px 0;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .contact-line {
-            font-size: 14px;
-            margin-bottom: 16px;
+            font-size: 13px;
+            margin-bottom: 6px;
             border-bottom: 1px solid #9aaebf;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
+            word-break: break-word;
+        }
+
+        .contact-line a {
+            color: #1a0dab;
+            text-decoration: none;
+            border-bottom: 1px dotted #aaa;
+        }
+
+        .contact-line a:hover {
+            text-decoration: underline;
+        }
+
+        .divider-dot {
+            margin: 0 4px;
+            color: #555;
         }
 
         #resume-preview h2 {
             font-size: 16px;
             border-bottom: 1.5px solid #111;
-            padding-bottom: 4px;
-            margin: 24px 0 10px 0;
+            padding-bottom: 3px;
+            margin: 14px 0 6px 0;
             text-transform: uppercase;
             font-weight: 600;
         }
 
         #resume-preview p, #resume-preview li, .preview-text {
             font-size: 12.5px;
-            line-height: 1.55;
+            line-height: 1.5;
+            margin: 4px 0;
         }
 
         .preserve-lines {
             white-space: pre-line;
         }
 
-        /* skills categories in preview */
         .preview-skills-group {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .preview-category {
             font-weight: 700;
             font-size: 13px;
-            margin-top: 6px;
+            margin-top: 4px;
             color: #0b2b44;
         }
 
         .preview-items {
-            margin-left: 4px;
-            line-height: 1.7;
+            margin-left: 0;
+            line-height: 1.6;
         }
 
-        /* print */
+        /* --- PRINT MEDIA (tight padding) --- */
         @media print {
             body { background: white; display: block; height: auto; overflow: visible; }
             .editor-panel { display: none; }
             .preview-panel { display: block; width: 100%; padding: 0; background: white; }
-            #resume-preview { width: 100%; padding: 0.8in; box-shadow: none; min-height: 0; }
+            #resume-preview { 
+                width: 100%; 
+                padding: 8mm 10mm; 
+                box-shadow: none; 
+                min-height: 0; 
+                margin: 0 auto;
+            }
+            a {
+                text-decoration: none;
+                color: black;
+            }
         }
 
-        /* responsive */
         @media (max-width: 900px) {
             body { flex-direction: column; height: auto; }
             .editor-panel, .preview-panel { width: 100%; }
@@ -332,14 +368,13 @@
 </head>
 <body>
 
-<!-- LEFT EDITOR PANEL -->
+<!-- LEFT EDITOR PANEL (with new optional URL fields) -->
 <div class="editor-panel">
     <div class="editor-header">
-        <h2>⚡ ATS Skill Builder</h2>
-        <div class="hint">Add/remove skill categories. Each category holds multiple skills. Preview auto-updates.</div>
+        <h2>⚡ ATS Builder</h2>
+        <div class="hint">Tight PDF margins, skills before experience. Now with optional LinkedIn / GitHub / Portfolio.</div>
     </div>
 
-    <!-- Basic details -->
     <div class="form-group">
         <label>Full name</label>
         <input type="text" id="inp-name" oninput="refreshPreview()" placeholder="Leslie Knope">
@@ -350,11 +385,26 @@
     </div>
     <div class="form-group">
         <label>Phone</label>
-        <input type="text" id="inp-phone" oninput="refreshPreview()" placeholder="+1 (555) 867-5309">
+        <input type="text" id="inp-phone" oninput="refreshPreview()" placeholder="+1 (317) 555-2490">
+    </div>
+
+    <!-- NEW OPTIONAL URL FIELDS (LinkedIn, GitHub, Portfolio) -->
+    <div class="form-group">
+        <label>LinkedIn URL <span class="optional-badge">optional</span></label>
+        <input type="url" id="inp-linkedin" oninput="refreshPreview()" placeholder="https://linkedin.com/in/leslieknope">
     </div>
     <div class="form-group">
+        <label>GitHub URL <span class="optional-badge">optional</span></label>
+        <input type="url" id="inp-github" oninput="refreshPreview()" placeholder="https://github.com/leslieknope">
+    </div>
+    <div class="form-group">
+        <label>Portfolio / Website <span class="optional-badge">optional</span></label>
+        <input type="url" id="inp-portfolio" oninput="refreshPreview()" placeholder="https://leslieknope.dev">
+    </div>
+
+    <div class="form-group">
         <label>Professional summary</label>
-        <textarea id="inp-summary" oninput="refreshPreview()" placeholder="Passionate public servant with 8+ years in urban planning..."></textarea>
+        <textarea id="inp-summary" oninput="refreshPreview()" placeholder="Dedicated public servant with expertise in project management..."></textarea>
     </div>
 
     <!-- SKILLS CATEGORIES (dynamic) -->
@@ -362,13 +412,12 @@
         <label style="font-size: 1rem;">📂 SKILL CATEGORIES (add / remove any)</label>
     </div>
     <div id="skills-categories-container"></div>
-
     <button class="add-category-btn" id="addCategoryBtn">➕ Add new category</button>
 
     <!-- Work & Education -->
     <div class="form-group" style="margin-top: 20px;">
         <label>Work experience</label>
-        <textarea id="inp-experience" oninput="refreshPreview()" placeholder="- Deputy director, Parks Dept (2015–present)\n- Increased community gardens by 40%"></textarea>
+        <textarea id="inp-experience" oninput="refreshPreview()" placeholder="- Deputy Director, Parks & Recreation, Pawnee (2012–present)\n- Spearheaded 'Pawnee Commons' project"></textarea>
     </div>
     <div class="form-group">
         <label>Education</label>
@@ -376,26 +425,26 @@
     </div>
 
     <div class="action-bar">
-        <button class="print-btn" onclick="window.print()">📄 Download PDF (ATS ready)</button>
+        <button class="print-btn" onclick="window.print()">📄 Download PDF (no side gaps)</button>
     </div>
-    <p style="font-size:0.8rem; color:#3f5468; padding-bottom: 12px;">Use browser print → save as PDF, A4. Padding is balanced.</p>
+    <p style="font-size:0.8rem; color:#3f5468; padding-bottom: 12px;">Print PDF – with optional profile links.</p>
 </div>
 
-<!-- RIGHT PREVIEW PANEL -->
+<!-- RIGHT PREVIEW PANEL (skills before experience + new contact line includes URLs) -->
 <div class="preview-panel">
     <div id="resume-preview">
         <h1 id="out-name">YOUR NAME</h1>
-        <div class="contact-line">
-            <span id="out-email">email@example.com</span> | <span id="out-phone">+0 000 000 000</span>
+        <div class="contact-line" id="contact-line-preview">
+            <!-- email | phone | linkedin | github | portfolio (if provided) -->
         </div>
 
         <h2>Professional Summary</h2>
         <p id="out-summary">Summary will appear here.</p>
 
-        <h2>Skills</h2>
-        <div id="out-skills-preview"></div>   <!-- dynamic categories injected -->
+        <h2>Technical Skills</h2>
+        <div id="out-skills-preview"></div>
 
-        <h2>Experience</h2>
+        <h2>Work Experience</h2>
         <div id="out-experience" class="preserve-lines">- Experience details</div>
 
         <h2>Education</h2>
@@ -404,14 +453,13 @@
 </div>
 
 <script>
-    // Data model: array of categories { name: "Programming Language", skills: ["JavaScript", "Java"] }
+    // Data model: categories array
     let skillCategories = [];
 
-    // DOM elements
     const container = document.getElementById('skills-categories-container');
     const addCatBtn = document.getElementById('addCategoryBtn');
 
-    // ---------- 1. load from localStorage (optional) or init with rich example ----------
+    // Full default categories from your image
     function loadDefaultCategories() {
         return [
             { name: "Programming Language", skills: ["JavaScript", "Java (Core Java)"] },
@@ -426,10 +474,9 @@
         ];
     }
 
-    // initialise with the extensive list you provided
     skillCategories = loadDefaultCategories();
 
-    // ---------- render categories in editor ----------
+    // render category editor
     function renderCategoryEditor() {
         let html = '';
         skillCategories.forEach((cat, idx) => {
@@ -439,7 +486,6 @@
             html += `<button class="remove-cat-btn" onclick="removeCategory(${idx})">✕</button>`;
             html += `</div>`;
 
-            // skills tags
             html += `<div class="skill-tag-container" id="cat-${idx}-tags">`;
             cat.skills.forEach((skill, skillIdx) => {
                 html += `<div class="skill-tag">`;
@@ -449,7 +495,6 @@
             });
             html += `</div>`;
 
-            // add new skill to this category
             html += `<div class="add-skill-area">`;
             html += `<input type="text" id="new-skill-${idx}" placeholder="New skill, e.g. GraphQL" />`;
             html += `<button class="small-btn" onclick="addSkillToCategory(${idx})">Add</button>`;
@@ -457,10 +502,9 @@
             html += `</div>`;
         });
         container.innerHTML = html;
-        refreshPreview();  // after any edit, update preview
+        refreshPreview();
     }
 
-    // utils
     function escapeHtml(unsafe) {
         return unsafe.replace(/[&<>"]/g, function(m) {
             if(m === '&') return '&amp;'; if(m === '<') return '&lt;'; if(m === '>') return '&gt;'; if(m === '"') return '&quot;';
@@ -468,7 +512,7 @@
         });
     }
 
-    // category ops
+    // global functions for buttons
     window.updateCategoryName = (index, newName) => {
         skillCategories[index].name = newName;
         refreshPreview();
@@ -493,23 +537,37 @@
         renderCategoryEditor();
     };
 
-    // add empty category
     addCatBtn.addEventListener('click', () => {
         skillCategories.push({ name: "New Category", skills: [] });
         renderCategoryEditor();
     });
 
-    // ---------- preview update: reflect all fields and skill categories ----------
+    // refresh preview (including new URL fields)
     window.refreshPreview = function() {
-        // basic fields
-        document.getElementById('out-name').innerText = document.getElementById('inp-name').value.trim() || "YOUR NAME";
-        document.getElementById('out-email').innerText = document.getElementById('inp-email').value.trim() || "email@example.com";
-        document.getElementById('out-phone').innerText = document.getElementById('inp-phone').value.trim() || "+0 000 000 000";
-        document.getElementById('out-summary').innerText = document.getElementById('inp-summary').value.trim() || "Professional summary – include your achievements.";
-        document.getElementById('out-experience').innerText = document.getElementById('inp-experience').value || "- Experience details";
-        document.getElementById('out-education').innerText = document.getElementById('inp-education').value || "- Education details";
+        // Basic text fields
+        const name = document.getElementById('inp-name').value.trim() || "YOUR NAME";
+        const email = document.getElementById('inp-email').value.trim() || "email@example.com";
+        const phone = document.getElementById('inp-phone').value.trim() || "+0 000 000 000";
+        const linkedin = document.getElementById('inp-linkedin').value.trim();
+        const github = document.getElementById('inp-github').value.trim();
+        const portfolio = document.getElementById('inp-portfolio').value.trim();
+        const summary = document.getElementById('inp-summary').value.trim() || "Professional summary – include your achievements.";
+        const exp = document.getElementById('inp-experience').value || "- Experience details";
+        const edu = document.getElementById('inp-education').value || "- Education details";
 
-        // generate skills preview HTML from categories
+        document.getElementById('out-name').innerText = name;
+        document.getElementById('out-summary').innerText = summary;
+        document.getElementById('out-experience').innerText = exp;
+        document.getElementById('out-education').innerText = edu;
+
+        // Build contact line with optional URLs
+        let contactHTML = `${email} | ${phone}`;
+        if (linkedin) contactHTML += ` | <a href="${linkedin}" target="_blank">LinkedIn</a>`;
+        if (github) contactHTML += ` | <a href="${github}" target="_blank">GitHub</a>`;
+        if (portfolio) contactHTML += ` | <a href="${portfolio}" target="_blank">Portfolio</a>`;
+        document.getElementById('contact-line-preview').innerHTML = contactHTML;
+
+        // skills preview
         let skillsHTML = '';
         skillCategories.forEach(cat => {
             if (cat.name.trim() !== '' || cat.skills.length > 0) {
@@ -523,16 +581,18 @@
         document.getElementById('out-skills-preview').innerHTML = skillsHTML;
     };
 
-    // Initial render and set example base fields
+    // fill with example data (including URLs)
     window.addEventListener('DOMContentLoaded', () => {
-        // set example basic info
         if (!document.getElementById('inp-name').value) {
-            document.getElementById('inp-name').value = 'Leslie Knope';
+            document.getElementById('inp-name').value = 'LESLIE KNOPE';
             document.getElementById('inp-email').value = 'leslie.knope@pawnee.gov';
             document.getElementById('inp-phone').value = '+1 (317) 555-2490';
+            document.getElementById('inp-linkedin').value = 'https://linkedin.com/in/leslieknope';
+            document.getElementById('inp-github').value = 'https://github.com/leslieknope';
+            document.getElementById('inp-portfolio').value = 'https://leslieknope.dev';
             document.getElementById('inp-summary').value = 'Dedicated public servant with expertise in project management, municipal governance, and community engagement. Proven track record of turning vacant lots into parks.';
-            document.getElementById('inp-experience').value = '- Deputy Director, Parks & Recreation, Pawnee (2012–present)\n  * Spearheaded "Pawnee Commons" project, 200% increase in green space\n- Administrative Assistant, City Hall (2009–2012)';
-            document.getElementById('inp-education').value = 'MPA, Indiana University – Bloomington\nBA, Political Science, Rutgers University';
+            document.getElementById('inp-experience').value = '- Deputy Director, Parks & Recreation, Pawnee (2012–present)\n- Spearheaded "Pawnee Commons" project, 200% increase in green space\n- Administrative Assistant, City Hall (2009–2012)';
+            document.getElementById('inp-education').value = 'MPA, Indiana University\nBA, Political Science, Rutgers';
         }
         renderCategoryEditor();
     });
