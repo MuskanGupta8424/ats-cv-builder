@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATS CV · +Projects section · dynamic</title>
+    <title>ATS CV · One Page · Optimized</title>
     <style>
-        /* --- GENERAL UI --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -18,303 +17,263 @@
             display: flex;
             height: 100vh;
             overflow: hidden;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         /* --- LEFT PANEL (editor) --- */
         .editor-panel {
-            width: 42%;
+            width: 44%;
             background: white;
             overflow-y: auto;
-            padding: 28px 24px;
+            padding: 20px 20px;
             box-shadow: 4px 0 20px rgba(0,0,0,0.06);
             border-right: 1px solid #dde3e9;
         }
 
         .editor-header {
-            margin-bottom: 24px;
+            margin-bottom: 16px;
         }
 
         .editor-header h2 {
             font-weight: 600;
-            font-size: 1.9rem;
+            font-size: 1.6rem;
             color: #0b1e33;
-            letter-spacing: -0.4px;
         }
 
         .editor-header .hint {
             background: #f0f6ff;
             color: #1e4a7a;
-            padding: 12px 16px;
-            border-radius: 14px;
-            font-size: 0.9rem;
-            margin-top: 16px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-top: 10px;
             border-left: 4px solid #2563eb;
         }
 
-        /* form elements */
         .form-group {
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
         }
 
         label {
             display: block;
             font-weight: 600;
-            font-size: 0.8rem;
-            letter-spacing: 0.3px;
+            font-size: 0.7rem;
+            letter-spacing: 0.2px;
             text-transform: uppercase;
             color: #2c455d;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .optional-badge {
             font-weight: 400;
             text-transform: lowercase;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             background: #e6edf5;
-            padding: 2px 8px;
-            border-radius: 30px;
-            margin-left: 8px;
+            padding: 2px 6px;
+            border-radius: 20px;
+            margin-left: 6px;
             color: #1e4a7a;
         }
 
         input, textarea {
             width: 100%;
-            padding: 12px 14px;
+            padding: 8px 10px;
             border: 1px solid #cbd5e1;
-            border-radius: 14px;
-            font-size: 0.95rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
             background: white;
-            transition: 0.2s;
             font-family: inherit;
-        }
-
-        input:focus, textarea:focus {
-            border-color: #2563eb;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
         }
 
         textarea {
             resize: vertical;
-            min-height: 80px;
+            min-height: 50px;
         }
 
-        /* skills category manager (unchanged) */
+        /* experience card - compact */
+        .exp-card {
+            background: #f9fbfd;
+            border-radius: 12px;
+            padding: 12px 12px 8px;
+            margin-bottom: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .exp-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .exp-field {
+            flex: 1 1 140px;
+        }
+
+        .exp-field input {
+            padding: 6px 8px;
+            font-size: 0.8rem;
+        }
+
+        .remove-exp-btn, .remove-cat-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #9aa9b9;
+            padding: 0 4px;
+        }
+
+        .add-exp-btn, .add-category-btn {
+            background: #e6edf5;
+            border: 1px dashed #2563eb;
+            color: #1e3a6b;
+            width: 100%;
+            padding: 8px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin: 8px 0 12px;
+            cursor: pointer;
+        }
+
+        /* skills category - compact */
         .skills-category-card {
             background: #f9fbfd;
-            border-radius: 20px;
-            padding: 18px 18px 12px 18px;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            padding: 12px 12px 8px;
+            margin-bottom: 12px;
             border: 1px solid #e2e8f0;
-            transition: 0.2s;
         }
 
         .category-header {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 14px;
+            gap: 8px;
+            margin-bottom: 8px;
         }
 
         .category-header input {
             flex: 1;
-            font-weight: 600;
-            background: white;
-            border: 1px solid #cbd5e1;
-            border-radius: 40px;
-            padding: 10px 16px;
-            font-size: 0.95rem;
-        }
-
-        .remove-cat-btn {
-            background: none;
-            border: none;
-            font-size: 22px;
-            cursor: pointer;
-            color: #9aa9b9;
-            padding: 0 6px;
-            transition: 0.1s;
-            box-shadow: none;
-            width: auto;
-            margin: 0;
-        }
-
-        .remove-cat-btn:hover {
-            color: #b91c1c;
-            background: none;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
         }
 
         .skill-tag-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin: 12px 0 8px 0;
+            gap: 4px;
+            margin: 6px 0;
         }
 
         .skill-tag {
             background: white;
             border: 1px solid #cbd5e1;
-            border-radius: 40px;
-            padding: 5px 14px 5px 18px;
+            border-radius: 20px;
+            padding: 2px 8px 2px 10px;
+            font-size: 0.7rem;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-
-        .skill-tag span {
-            max-width: 200px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            gap: 4px;
         }
 
         .remove-skill {
             background: none;
             border: none;
-            font-size: 18px;
+            font-size: 14px;
             cursor: pointer;
             color: #7f8fa4;
-            display: inline-flex;
-            align-items: center;
-            padding: 0 4px;
-            margin: 0;
-            width: auto;
-            box-shadow: none;
-        }
-
-        .remove-skill:hover {
-            color: #c00;
-            background: none;
+            padding: 0 2px;
         }
 
         .add-skill-area {
             display: flex;
-            gap: 8px;
-            margin-top: 14px;
-            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 6px;
         }
 
         .add-skill-area input {
             flex: 1;
-            padding: 10px 14px;
-            border-radius: 40px;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.75rem;
         }
 
         .small-btn {
             background: #edf2f7;
             border: 1px solid #b9c7da;
-            color: #1f3a5f;
-            font-weight: 500;
-            padding: 8px 18px;
-            border-radius: 40px;
-            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
             cursor: pointer;
-            box-shadow: none;
-            width: auto;
-            margin: 0;
-            transition: 0.1s;
-        }
-
-        .small-btn:hover {
-            background: #e2eaf3;
-            border-color: #2563eb;
-        }
-
-        .add-category-btn {
-            background: #e6edf5;
-            border: 1px dashed #2563eb;
-            color: #1e3a6b;
-            width: 100%;
-            padding: 14px;
-            border-radius: 40px;
-            font-weight: 600;
-            margin: 16px 0 12px 0;
-        }
-
-        .action-bar {
-            display: flex;
-            gap: 12px;
-            margin: 28px 0 8px;
+            white-space: nowrap;
         }
 
         .print-btn {
             background: #2563eb;
             color: white;
             border: none;
-            padding: 14px 28px;
-            border-radius: 40px;
+            padding: 10px 20px;
+            border-radius: 30px;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.9rem;
             width: 100%;
             cursor: pointer;
-            border: 1px solid #1e4fd0;
-            box-shadow: 0 6px 14px rgba(37,99,235,0.25);
+            margin: 12px 0 4px;
         }
 
-        /* --- RIGHT PANEL (preview) --- */
+        /* --- RIGHT PANEL (preview) - OPTIMIZED FOR ONE PAGE --- */
         .preview-panel {
-            width: 58%;
+            width: 56%;
             background: #4a4e54;
-            padding: 30px 20px;
+            padding: 15px 15px;
             display: flex;
             justify-content: center;
             overflow-y: auto;
         }
 
-        /* ATS resume card – tight padding (8mm top/bottom, 10mm sides) */
         #resume-preview {
             background: white;
             width: 210mm;
             max-width: 100%;
             min-height: 297mm;
-            padding: 8mm 10mm;
-            box-shadow: 0 16px 38px rgba(0,0,0,0.3);
+            padding: 5mm 8mm;  /* REDUCED PADDING for one page */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
             color: #1a2634;
             font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-size: 10.5px;  /* slightly smaller base font */
+            line-height: 1.35;
         }
 
         #resume-preview h1 {
-            font-size: 28px;
-            margin: 0 0 4px 0;
+            font-size: 22px;
+            margin: 0 0 2px 0;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         .contact-line {
-            font-size: 13px;
-            margin-bottom: 6px;
+            font-size: 10px;
+            margin-bottom: 4px;
             border-bottom: 1px solid #9aaebf;
-            padding-bottom: 5px;
-            word-break: break-word;
-        }
-
-        .contact-line a {
-            color: #1a0dab;
-            text-decoration: none;
-            border-bottom: 1px dotted #aaa;
-        }
-
-        .contact-line a:hover {
-            text-decoration: underline;
+            padding-bottom: 3px;
         }
 
         #resume-preview h2 {
-            font-size: 16px;
-            border-bottom: 1.5px solid #111;
-            padding-bottom: 3px;
-            margin: 14px 0 6px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #111;
+            padding-bottom: 2px;
+            margin: 8px 0 4px 0;
             text-transform: uppercase;
             font-weight: 600;
         }
 
         #resume-preview p, #resume-preview li, .preview-text {
-            font-size: 12.5px;
-            line-height: 1.5;
-            margin: 4px 0;
+            font-size: 10px;
+            line-height: 1.4;
+            margin: 2px 0;
         }
 
         .preserve-lines {
@@ -322,187 +281,206 @@
         }
 
         .preview-skills-group {
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         .preview-category {
             font-weight: 700;
-            font-size: 13px;
-            margin-top: 4px;
+            font-size: 10.5px;
+            margin-top: 2px;
             color: #0b2b44;
         }
 
         .preview-items {
             margin-left: 0;
-            line-height: 1.6;
+            line-height: 1.4;
+            font-size: 10px;
         }
 
-        /* --- PRINT MEDIA (tight padding) --- */
+        .exp-preview-item {
+            margin-bottom: 6px;
+        }
+        .exp-title {
+            font-weight: 700;
+            font-size: 11px;
+        }
+        .exp-company {
+            font-weight: 600;
+        }
+        .exp-date {
+            font-weight: 400;
+            color: #2c3e50;
+            font-size: 9.5px;
+        }
+        .exp-desc {
+            margin-left: 4px;
+            margin-top: 1px;
+            font-size: 9.5px;
+        }
+
         @media print {
             body { background: white; display: block; height: auto; overflow: visible; }
             .editor-panel { display: none; }
             .preview-panel { display: block; width: 100%; padding: 0; background: white; }
-            #resume-preview { 
-                width: 100%; 
-                padding: 8mm 10mm; 
-                box-shadow: none; 
-                min-height: 0; 
-                margin: 0 auto;
-            }
-            a {
-                text-decoration: none;
-                color: black;
-            }
-        }
-
-        @media (max-width: 900px) {
-            body { flex-direction: column; height: auto; }
-            .editor-panel, .preview-panel { width: 100%; }
+            #resume-preview { width: 100%; padding: 5mm 8mm; box-shadow: none; min-height: 0; margin: 0 auto; }
+            a { text-decoration: none; color: black; }
         }
     </style>
 </head>
 <body>
 
-<!-- LEFT EDITOR PANEL (with new PROJECTS field) -->
+<!-- LEFT EDITOR PANEL (same functionality, just more compact) -->
 <div class="editor-panel">
     <div class="editor-header">
-        <h2>⚡ ATS Builder</h2>
-        <div class="hint">Projects section added. Summary updated to your text. Tight PDF margins.</div>
+        <h2>⚡ One-Page ATS CV</h2>
+        <div class="hint">All content fits on ONE page with optimized spacing</div>
     </div>
 
-    <div class="form-group">
-        <label>Full name</label>
-        <input type="text" id="inp-name" oninput="refreshPreview()" placeholder="Leslie Knope">
+    <!-- basic details in 2 columns for compactness -->
+    <div style="display: flex; gap: 8px;">
+        <div class="form-group" style="flex:2"><label>Full name</label><input type="text" id="inp-name" oninput="refreshPreview()" value="LESLIE KNOPE"></div>
+        <div class="form-group" style="flex:1"><label>Phone</label><input type="text" id="inp-phone" oninput="refreshPreview()" value="+1 (317) 555-2490"></div>
     </div>
-    <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="inp-email" oninput="refreshPreview()" placeholder="l.knope@example.gov">
+    <div style="display: flex; gap: 8px;">
+        <div class="form-group" style="flex:1"><label>Email</label><input type="email" id="inp-email" oninput="refreshPreview()" value="leslie.knope@pawnee.gov"></div>
+        <div class="form-group" style="flex:1"><label>LinkedIn</label><input type="url" id="inp-linkedin" oninput="refreshPreview()" value="https://linkedin.com/in/leslieknope"></div>
     </div>
-    <div class="form-group">
-        <label>Phone</label>
-        <input type="text" id="inp-phone" oninput="refreshPreview()" placeholder="+1 (317) 555-2490">
-    </div>
-
-    <!-- OPTIONAL URL FIELDS (LinkedIn, GitHub, Portfolio) -->
-    <div class="form-group">
-        <label>LinkedIn URL <span class="optional-badge">optional</span></label>
-        <input type="url" id="inp-linkedin" oninput="refreshPreview()" placeholder="https://linkedin.com/in/...">
-    </div>
-    <div class="form-group">
-        <label>GitHub URL <span class="optional-badge">optional</span></label>
-        <input type="url" id="inp-github" oninput="refreshPreview()" placeholder="https://github.com/...">
-    </div>
-    <div class="form-group">
-        <label>Portfolio / Website <span class="optional-badge">optional</span></label>
-        <input type="url" id="inp-portfolio" oninput="refreshPreview()" placeholder="https://...">
+    <div style="display: flex; gap: 8px;">
+        <div class="form-group" style="flex:1"><label>GitHub</label><input type="url" id="inp-github" oninput="refreshPreview()" value="https://github.com/leslieknope"></div>
+        <div class="form-group" style="flex:1"><label>Portfolio</label><input type="url" id="inp-portfolio" oninput="refreshPreview()" value="https://leslieknope.dev"></div>
     </div>
 
+    <!-- summary -->
     <div class="form-group">
         <label>Professional summary</label>
-        <textarea id="inp-summary" oninput="refreshPreview()" placeholder="Dynamic Frontend Developer...">Dedicated public servant with expertise in project management, municipal governance, and community engagement. Proven track record of turning vacant lots into parks.</textarea>
+        <textarea id="inp-summary" oninput="refreshPreview()" rows="3">Dynamic Frontend Developer with a proven track record at Zuhouz Official, specializing in React.js and Next.js. Achieved a 20% reduction in design-to-development turnaround by creating pixel-perfect UI components. Adept at collaborating with teams and optimizing performance, I bring strong problem-solving skills and a passion for delivering high-quality web applications.</textarea>
     </div>
 
-    <!-- SKILLS CATEGORIES (dynamic) -->
-    <div style="margin: 24px 0 8px;">
-        <label style="font-size: 1rem;">📂 SKILL CATEGORIES (add / remove any)</label>
-    </div>
+    <!-- WORK EXPERIENCE (dynamic) -->
+    <div style="margin: 10px 0 4px;"><label>💼 WORK EXPERIENCE</label></div>
+    <div id="exp-container"></div>
+    <button class="add-exp-btn" id="addExpBtn">➕ Add job</button>
+
+    <!-- SKILLS CATEGORIES -->
+    <div style="margin: 10px 0 4px;"><label>📂 SKILL CATEGORIES</label></div>
     <div id="skills-categories-container"></div>
-    <button class="add-category-btn" id="addCategoryBtn">➕ Add new category</button>
+    <button class="add-category-btn" id="addCategoryBtn">➕ Add category</button>
 
-    <!-- Work & Education -->
-    <div class="form-group" style="margin-top: 20px;">
-        <label>Work experience</label>
-        <textarea id="inp-experience" oninput="refreshPreview()" placeholder="- Frontend Developer, Zuhouz Official (2022–present)\n- Reduced turnaround by 20% with pixel-perfect components"></textarea>
-    </div>
-
-    <!-- NEW PROJECTS SECTION (free text / bullet points) -->
-    <div class="form-group">
-        <label>Projects (bullet points or plain text)</label>
-        <textarea id="inp-projects" oninput="refreshPreview()" placeholder="- E‑commerce Dashboard: React, Node, MongoDB\n- Portfolio Website: Next.js, Tailwind, Framer Motion"></textarea>
-    </div>
-
-    <div class="form-group">
-        <label>Education</label>
-        <textarea id="inp-education" oninput="refreshPreview()" placeholder="B.Sc. Computer Science, University Name\nCertification in Web Development"></textarea>
+    <!-- Projects & Education in 2 columns -->
+    <div style="display: flex; gap: 8px; margin-top: 8px;">
+        <div class="form-group" style="flex:1"><label>Projects</label><textarea id="inp-projects" oninput="refreshPreview()" rows="3">- E‑Commerce Platform: React, Node.js, MongoDB
+- Portfolio Dashboard: Next.js, Tailwind, Framer Motion
+- Task Manager App: Redux, Firebase</textarea></div>
+        <div class="form-group" style="flex:1"><label>Education</label><textarea id="inp-education" oninput="refreshPreview()" rows="3">B.Sc. Computer Science, Indiana University
+Full-Stack Web Development Certification</textarea></div>
     </div>
 
     <div class="action-bar">
-        <button class="print-btn" onclick="window.print()">📄 Download PDF (no side gaps)</button>
+        <button class="print-btn" onclick="window.print()">📄 Download PDF (One Page)</button>
     </div>
-    <p style="font-size:0.8rem; color:#3f5468; padding-bottom: 12px;">Projects section appears after experience. Optional URLs included.</p>
 </div>
 
-<!-- RIGHT PREVIEW PANEL (skills before experience + PROJECTS after experience) -->
+<!-- RIGHT PREVIEW PANEL (optimized for one page) -->
 <div class="preview-panel">
     <div id="resume-preview">
-        <h1 id="out-name">YOUR NAME</h1>
-        <div class="contact-line" id="contact-line-preview">
-            <!-- email | phone | linkedin | github | portfolio (if provided) -->
-        </div>
+        <h1 id="out-name">LESLIE KNOPE</h1>
+        <div class="contact-line" id="contact-line-preview"></div>
 
         <h2>Professional Summary</h2>
-        <p id="out-summary">Summary will appear here.</p>
+        <p id="out-summary"></p>
 
         <h2>Technical Skills</h2>
         <div id="out-skills-preview"></div>
 
         <h2>Work Experience</h2>
-        <div id="out-experience" class="preserve-lines">- Experience details</div>
+        <div id="out-experience-preview"></div>
 
-        <!-- NEW PROJECTS SECTION (right after experience) -->
         <h2>Projects</h2>
-        <div id="out-projects" class="preserve-lines">- Project details</div>
+        <div id="out-projects" class="preserve-lines"></div>
 
         <h2>Education</h2>
-        <div id="out-education" class="preserve-lines">- Education details</div>
+        <div id="out-education" class="preserve-lines"></div>
     </div>
 </div>
 
 <script>
-    // Data model: categories array
+    // Data models
     let skillCategories = [];
+    let workExperiences = [];
+
+    // Default skills
+    skillCategories = [
+        { name: "Programming Language", skills: ["JavaScript", "Java (Core Java)"] },
+        { name: "Frontend Development", skills: ["ReactJS", "Next.js", "JavaScript (ES6+)", "TypeScript", "HTML5", "CSS3", "Tailwind CSS", "Bootstrap", "Styled Components", "React Hooks", "Redux", "Context API"] },
+        { name: "Backend Development", skills: ["Node.js", "Express.js", "REST API", "Axios", "Fetch API"] },
+        { name: "Database Technologies", skills: ["MongoDB", "MySQL", "Firebase"] },
+        { name: "Cloud & DevOps", skills: ["CI/CD Pipelines", "AWS (Basic)", "Linux / Ubuntu"] },
+        { name: "UI / Animation & Design Tools", skills: ["GSAP", "Framer Motion", "Adobe XD", "Canva"] },
+        { name: "Tools & Environment", skills: ["Git", "GitHub", "VS Code", "Cursor AI", "Postman", "Basic Jira"] },
+        { name: "Computer Science Fundamentals", skills: ["OOP", "Data Structures & Algorithms (Basic)"] },
+        { name: "Web & Software Practices", skills: ["SEO Basics", "Agile Methodologies"] }
+    ];
+
+    // Default work experiences
+    workExperiences = [
+        {
+            title: "Frontend Developer",
+            company: "Zuhouz Official",
+            date: "06/2024 - Present",
+            description: "- Developed cloud-enabled web app using Next.js/React.js\n- Converted Figma designs to pixel-perfect components, 20% faster turnaround\n- Integrated REST APIs, state management with React Hooks/Context API\n- Optimized frontend performance, collaborated with backend teams"
+        },
+        {
+            title: "FullStack React Developer",
+            company: "MyWeb3Gift",
+            date: "12/2023 - 05/2024",
+            description: "- Built end-to-end features with React.js, Firebase (Auth, DB, Storage)\n- Designed reusable UI components, abstracted backend logic\n- Debugged issues, deployed features, ensured responsive layouts"
+        },
+        {
+            title: "Frontend Web Developer",
+            company: "Winadora Retail Marketing",
+            date: "07/2023 - 12/2023",
+            description: ""
+        }
+    ];
 
     const container = document.getElementById('skills-categories-container');
     const addCatBtn = document.getElementById('addCategoryBtn');
+    const expContainer = document.getElementById('exp-container');
+    const addExpBtn = document.getElementById('addExpBtn');
 
-    // Full default categories from your image
-    function loadDefaultCategories() {
-        return [
-            { name: "Programming Language", skills: ["JavaScript", "Java (Core Java)"] },
-            { name: "Frontend Development", skills: ["ReactJS", "Next.js", "JavaScript (ES6+)", "TypeScript", "HTML5", "CSS3", "Tailwind CSS", "Bootstrap", "Styled Components", "React Hooks", "Redux", "Context API"] },
-            { name: "Backend Development", skills: ["Node.js", "Express.js", "REST API", "Axios", "Fetch API"] },
-            { name: "Database Technologies", skills: ["MongoDB", "MySQL", "Firebase"] },
-            { name: "Cloud & DevOps", skills: ["CI/CD Pipelines", "AWS (Basic)", "Linux / Ubuntu"] },
-            { name: "UI / Animation & Design Tools", skills: ["GSAP", "Framer Motion", "Adobe XD", "Canva"] },
-            { name: "Tools & Environment", skills: ["Git", "GitHub", "VS Code", "Cursor AI", "Postman", "Basic Jira"] },
-            { name: "Computer Science Fundamentals", skills: ["OOP", "Data Structures & Algorithms (Basic)"] },
-            { name: "Web & Software Practices", skills: ["SEO Basics", "Agile Methodologies"] }
-        ];
+    // Render functions (simplified for brevity - same as before but with compact styling)
+    function renderExpEditor() {
+        let html = '';
+        workExperiences.forEach((exp, idx) => {
+            html += `<div class="exp-card">`;
+            html += `<div style="display: flex; justify-content: space-between;"><span style="font-weight:600; font-size:0.8rem;">#${idx+1}</span><button class="remove-exp-btn" onclick="removeExp(${idx})">✕</button></div>`;
+            html += `<div class="exp-row">`;
+            html += `<div class="exp-field"><input type="text" value="${escapeHtml(exp.title)}" oninput="updateExp(${idx}, 'title', this.value)" placeholder="Title"></div>`;
+            html += `<div class="exp-field"><input type="text" value="${escapeHtml(exp.company)}" oninput="updateExp(${idx}, 'company', this.value)" placeholder="Company"></div>`;
+            html += `<div class="exp-field"><input type="text" value="${escapeHtml(exp.date)}" oninput="updateExp(${idx}, 'date', this.value)" placeholder="Date"></div>`;
+            html += `</div>`;
+            html += `<textarea oninput="updateExp(${idx}, 'description', this.value)" placeholder="Description" rows="2">${escapeHtml(exp.description)}</textarea>`;
+            html += `</div>`;
+        });
+        expContainer.innerHTML = html;
+        refreshPreview();
     }
 
-    skillCategories = loadDefaultCategories();
-
-    // render category editor
     function renderCategoryEditor() {
         let html = '';
         skillCategories.forEach((cat, idx) => {
-            html += `<div class="skills-category-card" data-cat-index="${idx}">`;
+            html += `<div class="skills-category-card">`;
             html += `<div class="category-header">`;
-            html += `<input type="text" class="cat-name-input" value="${escapeHtml(cat.name)}" placeholder="Category name" oninput="updateCategoryName(${idx}, this.value)">`;
+            html += `<input type="text" value="${escapeHtml(cat.name)}" oninput="updateCategoryName(${idx}, this.value)" placeholder="Category">`;
             html += `<button class="remove-cat-btn" onclick="removeCategory(${idx})">✕</button>`;
             html += `</div>`;
-
-            html += `<div class="skill-tag-container" id="cat-${idx}-tags">`;
+            html += `<div class="skill-tag-container">`;
             cat.skills.forEach((skill, skillIdx) => {
-                html += `<div class="skill-tag">`;
-                html += `<span>${escapeHtml(skill)}</span>`;
-                html += `<button class="remove-skill" onclick="removeSkill(${idx}, ${skillIdx})">✕</button>`;
-                html += `</div>`;
+                html += `<div class="skill-tag"><span>${escapeHtml(skill)}</span><button class="remove-skill" onclick="removeSkill(${idx}, ${skillIdx})">✕</button></div>`;
             });
             html += `</div>`;
-
             html += `<div class="add-skill-area">`;
-            html += `<input type="text" id="new-skill-${idx}" placeholder="New skill, e.g. GraphQL" />`;
+            html += `<input type="text" id="new-skill-${idx}" placeholder="Add skill">`;
             html += `<button class="small-btn" onclick="addSkillToCategory(${idx})">Add</button>`;
             html += `</div>`;
             html += `</div>`;
@@ -518,93 +496,82 @@
         });
     }
 
-    // global functions for buttons
-    window.updateCategoryName = (index, newName) => {
-        skillCategories[index].name = newName;
-        refreshPreview();
-    };
-
-    window.removeCategory = (index) => {
-        skillCategories.splice(index, 1);
-        renderCategoryEditor();
-    };
-
-    window.removeSkill = (catIdx, skillIdx) => {
-        skillCategories[catIdx].skills.splice(skillIdx, 1);
-        renderCategoryEditor();
-    };
-
+    // Event handlers
+    window.updateExp = (idx, field, value) => { workExperiences[idx][field] = value; refreshPreview(); };
+    window.removeExp = (idx) => { workExperiences.splice(idx, 1); renderExpEditor(); };
+    window.updateCategoryName = (idx, val) => { skillCategories[idx].name = val; refreshPreview(); };
+    window.removeCategory = (idx) => { skillCategories.splice(idx, 1); renderCategoryEditor(); };
+    window.removeSkill = (catIdx, skillIdx) => { skillCategories[catIdx].skills.splice(skillIdx, 1); renderCategoryEditor(); };
     window.addSkillToCategory = (catIdx) => {
         const input = document.getElementById(`new-skill-${catIdx}`);
-        const newSkill = input.value.trim();
-        if (newSkill === '') return;
-        skillCategories[catIdx].skills.push(newSkill);
-        input.value = '';
-        renderCategoryEditor();
+        if (input.value.trim()) {
+            skillCategories[catIdx].skills.push(input.value.trim());
+            input.value = '';
+            renderCategoryEditor();
+        }
     };
+
+    addExpBtn.addEventListener('click', () => {
+        workExperiences.push({ title: "", company: "", date: "", description: "" });
+        renderExpEditor();
+    });
 
     addCatBtn.addEventListener('click', () => {
         skillCategories.push({ name: "New Category", skills: [] });
         renderCategoryEditor();
     });
 
-    // refresh preview (including new PROJECTS field)
+    // Refresh preview
     window.refreshPreview = function() {
-        // Basic text fields
-        const name = document.getElementById('inp-name').value.trim() || "YOUR NAME";
-        const email = document.getElementById('inp-email').value.trim() || "email@example.com";
-        const phone = document.getElementById('inp-phone').value.trim() || "+0 000 000 000";
-        const linkedin = document.getElementById('inp-linkedin').value.trim();
-        const github = document.getElementById('inp-github').value.trim();
-        const portfolio = document.getElementById('inp-portfolio').value.trim();
-        const summary = document.getElementById('inp-summary').value.trim() || "Professional summary...";
-        const exp = document.getElementById('inp-experience').value || "- Experience details";
-        const projects = document.getElementById('inp-projects').value || "- Project details";
-        const edu = document.getElementById('inp-education').value || "- Education details";
-
-        document.getElementById('out-name').innerText = name;
-        document.getElementById('out-summary').innerText = summary;
-        document.getElementById('out-experience').innerText = exp;
-        document.getElementById('out-projects').innerText = projects;   // new
-        document.getElementById('out-education').innerText = edu;
-
-        // Build contact line with optional URLs
+        // Update all fields from inputs
+        document.getElementById('out-name').innerText = document.getElementById('inp-name').value || "YOUR NAME";
+        
+        // Contact line
+        const email = document.getElementById('inp-email').value;
+        const phone = document.getElementById('inp-phone').value;
+        const linkedin = document.getElementById('inp-linkedin').value;
+        const github = document.getElementById('inp-github').value;
+        const portfolio = document.getElementById('inp-portfolio').value;
         let contactHTML = `${email} | ${phone}`;
-        if (linkedin) contactHTML += ` | <a href="${linkedin}" target="_blank">LinkedIn</a>`;
-        if (github) contactHTML += ` | <a href="${github}" target="_blank">GitHub</a>`;
-        if (portfolio) contactHTML += ` | <a href="${portfolio}" target="_blank">Portfolio</a>`;
+        if (linkedin) contactHTML += ` | <a href="${linkedin}">LinkedIn</a>`;
+        if (github) contactHTML += ` | <a href="${github}">GitHub</a>`;
+        if (portfolio) contactHTML += ` | <a href="${portfolio}">Portfolio</a>`;
         document.getElementById('contact-line-preview').innerHTML = contactHTML;
 
-        // skills preview
+        // Summary
+        document.getElementById('out-summary').innerText = document.getElementById('inp-summary').value;
+
+        // Skills preview
         let skillsHTML = '';
         skillCategories.forEach(cat => {
-            if (cat.name.trim() !== '' || cat.skills.length > 0) {
-                skillsHTML += `<div class="preview-skills-group">`;
-                skillsHTML += `<div class="preview-category">${escapeHtml(cat.name) || 'Untitled'}:</div>`;
-                skillsHTML += `<div class="preview-items">${escapeHtml(cat.skills.join(', ')) || '—'}</div>`;
-                skillsHTML += `</div>`;
+            if (cat.skills.length) {
+                skillsHTML += `<div class="preview-skills-group"><span class="preview-category">${cat.name}:</span> <span class="preview-items">${cat.skills.join(', ')}</span></div>`;
             }
         });
-        if (skillsHTML === '') skillsHTML = '<p>Add skills in categories</p>';
         document.getElementById('out-skills-preview').innerHTML = skillsHTML;
+
+        // Experience preview
+        let expHTML = '';
+        workExperiences.forEach(exp => {
+            if (exp.title || exp.company) {
+                expHTML += `<div class="exp-preview-item">`;
+                expHTML += `<span class="exp-title">${exp.title}</span> – <span class="exp-company">${exp.company}</span> <span class="exp-date">(${exp.date})</span>`;
+                if (exp.description) {
+                    expHTML += `<div class="exp-desc">${exp.description.replace(/\n/g, '<br>')}</div>`;
+                }
+                expHTML += `</div>`;
+            }
+        });
+        document.getElementById('out-experience-preview').innerHTML = expHTML;
+
+        // Projects & Education
+        document.getElementById('out-projects').innerHTML = document.getElementById('inp-projects').value.replace(/\n/g, '<br>');
+        document.getElementById('out-education').innerHTML = document.getElementById('inp-education').value.replace(/\n/g, '<br>');
     };
 
-    // fill with example data (including the exact summary and a couple of projects)
-    window.addEventListener('DOMContentLoaded', () => {
-        if (!document.getElementById('inp-name').value) {
-            document.getElementById('inp-name').value = 'LESLIE KNOPE';
-            document.getElementById('inp-email').value = 'leslie.knope@pawnee.gov';
-            document.getElementById('inp-phone').value = '+1 (317) 555-2490';
-            document.getElementById('inp-linkedin').value = 'https://linkedin.com/in/leslieknope';
-            document.getElementById('inp-github').value = 'https://github.com/leslieknope';
-            document.getElementById('inp-portfolio').value = 'https://leslieknope.dev';
-            // The summary is already pre-filled with your exact text via the textarea content.
-            document.getElementById('inp-experience').value = 'Dedicated public servant with expertise in project management, and community engagement. Proven track record of turning vacant lots into parks.';
-            document.getElementById('inp-projects').value = '- E‑Commerce Platform: React, Node.js, MongoDB – built responsive storefront\n- Portfolio Dashboard: Next.js, Tailwind, Framer Motion – interactive animations\n- Task Manager App: Redux, Firebase, real-time sync';
-            document.getElementById('inp-education').value = 'B.Sc. Computer Science, University of Indiana\nFull-Stack Web Development Certification (freeCodeCamp)';
-        }
-        renderCategoryEditor();
-    });
+    // Initial render
+    renderExpEditor();
+    renderCategoryEditor();
 </script>
 </body>
 </html>
