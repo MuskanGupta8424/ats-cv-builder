@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATS CV · +LinkedIn/GitHub/Portfolio (optional)</title>
+    <title>ATS CV · +Projects section · dynamic</title>
     <style>
         /* --- GENERAL UI --- */
         * {
@@ -302,11 +302,6 @@
             text-decoration: underline;
         }
 
-        .divider-dot {
-            margin: 0 4px;
-            color: #555;
-        }
-
         #resume-preview h2 {
             font-size: 16px;
             border-bottom: 1.5px solid #111;
@@ -368,11 +363,11 @@
 </head>
 <body>
 
-<!-- LEFT EDITOR PANEL (with new optional URL fields) -->
+<!-- LEFT EDITOR PANEL (with new PROJECTS field) -->
 <div class="editor-panel">
     <div class="editor-header">
         <h2>⚡ ATS Builder</h2>
-        <div class="hint">Tight PDF margins, skills before experience. Now with optional LinkedIn / GitHub / Portfolio.</div>
+        <div class="hint">Projects section added. Summary updated to your text. Tight PDF margins.</div>
     </div>
 
     <div class="form-group">
@@ -388,23 +383,23 @@
         <input type="text" id="inp-phone" oninput="refreshPreview()" placeholder="+1 (317) 555-2490">
     </div>
 
-    <!-- NEW OPTIONAL URL FIELDS (LinkedIn, GitHub, Portfolio) -->
+    <!-- OPTIONAL URL FIELDS (LinkedIn, GitHub, Portfolio) -->
     <div class="form-group">
         <label>LinkedIn URL <span class="optional-badge">optional</span></label>
-        <input type="url" id="inp-linkedin" oninput="refreshPreview()" placeholder="https://linkedin.com/in/leslieknope">
+        <input type="url" id="inp-linkedin" oninput="refreshPreview()" placeholder="https://linkedin.com/in/...">
     </div>
     <div class="form-group">
         <label>GitHub URL <span class="optional-badge">optional</span></label>
-        <input type="url" id="inp-github" oninput="refreshPreview()" placeholder="https://github.com/leslieknope">
+        <input type="url" id="inp-github" oninput="refreshPreview()" placeholder="https://github.com/...">
     </div>
     <div class="form-group">
         <label>Portfolio / Website <span class="optional-badge">optional</span></label>
-        <input type="url" id="inp-portfolio" oninput="refreshPreview()" placeholder="https://leslieknope.dev">
+        <input type="url" id="inp-portfolio" oninput="refreshPreview()" placeholder="https://...">
     </div>
 
     <div class="form-group">
         <label>Professional summary</label>
-        <textarea id="inp-summary" oninput="refreshPreview()" placeholder="Dedicated public servant with expertise in project management..."></textarea>
+        <textarea id="inp-summary" oninput="refreshPreview()" placeholder="Dynamic Frontend Developer...">Dynamic Frontend Developer with a proven track record at Zuhouz Official, specializing in React.js and Next.js. Achieved a 20% reduction in design-to-development turnaround by creating pixel-perfect UI components. Adept at collaborating with teams and optimizing performance, I bring strong problem-solving skills and a passion for delivering high-quality web applications.</textarea>
     </div>
 
     <!-- SKILLS CATEGORIES (dynamic) -->
@@ -417,20 +412,27 @@
     <!-- Work & Education -->
     <div class="form-group" style="margin-top: 20px;">
         <label>Work experience</label>
-        <textarea id="inp-experience" oninput="refreshPreview()" placeholder="- Deputy Director, Parks & Recreation, Pawnee (2012–present)\n- Spearheaded 'Pawnee Commons' project"></textarea>
+        <textarea id="inp-experience" oninput="refreshPreview()" placeholder="- Frontend Developer, Zuhouz Official (2022–present)\n- Reduced turnaround by 20% with pixel-perfect components"></textarea>
     </div>
+
+    <!-- NEW PROJECTS SECTION (free text / bullet points) -->
+    <div class="form-group">
+        <label>Projects (bullet points or plain text)</label>
+        <textarea id="inp-projects" oninput="refreshPreview()" placeholder="- E‑commerce Dashboard: React, Node, MongoDB\n- Portfolio Website: Next.js, Tailwind, Framer Motion"></textarea>
+    </div>
+
     <div class="form-group">
         <label>Education</label>
-        <textarea id="inp-education" oninput="refreshPreview()" placeholder="MPA, Indiana University\nBA, Political Science, Rutgers"></textarea>
+        <textarea id="inp-education" oninput="refreshPreview()" placeholder="B.Sc. Computer Science, University Name\nCertification in Web Development"></textarea>
     </div>
 
     <div class="action-bar">
         <button class="print-btn" onclick="window.print()">📄 Download PDF (no side gaps)</button>
     </div>
-    <p style="font-size:0.8rem; color:#3f5468; padding-bottom: 12px;">Print PDF – with optional profile links.</p>
+    <p style="font-size:0.8rem; color:#3f5468; padding-bottom: 12px;">Projects section appears after experience. Optional URLs included.</p>
 </div>
 
-<!-- RIGHT PREVIEW PANEL (skills before experience + new contact line includes URLs) -->
+<!-- RIGHT PREVIEW PANEL (skills before experience + PROJECTS after experience) -->
 <div class="preview-panel">
     <div id="resume-preview">
         <h1 id="out-name">YOUR NAME</h1>
@@ -446,6 +448,10 @@
 
         <h2>Work Experience</h2>
         <div id="out-experience" class="preserve-lines">- Experience details</div>
+
+        <!-- NEW PROJECTS SECTION (right after experience) -->
+        <h2>Projects</h2>
+        <div id="out-projects" class="preserve-lines">- Project details</div>
 
         <h2>Education</h2>
         <div id="out-education" class="preserve-lines">- Education details</div>
@@ -542,7 +548,7 @@
         renderCategoryEditor();
     });
 
-    // refresh preview (including new URL fields)
+    // refresh preview (including new PROJECTS field)
     window.refreshPreview = function() {
         // Basic text fields
         const name = document.getElementById('inp-name').value.trim() || "YOUR NAME";
@@ -551,13 +557,15 @@
         const linkedin = document.getElementById('inp-linkedin').value.trim();
         const github = document.getElementById('inp-github').value.trim();
         const portfolio = document.getElementById('inp-portfolio').value.trim();
-        const summary = document.getElementById('inp-summary').value.trim() || "Professional summary – include your achievements.";
+        const summary = document.getElementById('inp-summary').value.trim() || "Professional summary...";
         const exp = document.getElementById('inp-experience').value || "- Experience details";
+        const projects = document.getElementById('inp-projects').value || "- Project details";
         const edu = document.getElementById('inp-education').value || "- Education details";
 
         document.getElementById('out-name').innerText = name;
         document.getElementById('out-summary').innerText = summary;
         document.getElementById('out-experience').innerText = exp;
+        document.getElementById('out-projects').innerText = projects;   // new
         document.getElementById('out-education').innerText = edu;
 
         // Build contact line with optional URLs
@@ -581,7 +589,7 @@
         document.getElementById('out-skills-preview').innerHTML = skillsHTML;
     };
 
-    // fill with example data (including URLs)
+    // fill with example data (including the exact summary and a couple of projects)
     window.addEventListener('DOMContentLoaded', () => {
         if (!document.getElementById('inp-name').value) {
             document.getElementById('inp-name').value = 'LESLIE KNOPE';
@@ -590,9 +598,10 @@
             document.getElementById('inp-linkedin').value = 'https://linkedin.com/in/leslieknope';
             document.getElementById('inp-github').value = 'https://github.com/leslieknope';
             document.getElementById('inp-portfolio').value = 'https://leslieknope.dev';
-            document.getElementById('inp-summary').value = 'Dedicated public servant with expertise in project management, municipal governance, and community engagement. Proven track record of turning vacant lots into parks.';
-            document.getElementById('inp-experience').value = '- Deputy Director, Parks & Recreation, Pawnee (2012–present)\n- Spearheaded "Pawnee Commons" project, 200% increase in green space\n- Administrative Assistant, City Hall (2009–2012)';
-            document.getElementById('inp-education').value = 'MPA, Indiana University\nBA, Political Science, Rutgers';
+            // The summary is already pre-filled with your exact text via the textarea content.
+            document.getElementById('inp-experience').value = '- Frontend Developer, Zuhouz Official (2022–present)\n- Achieved 20% reduction in design-to-development turnaround\n- Collaborated with cross-functional teams to deliver pixel-perfect UI';
+            document.getElementById('inp-projects').value = '- E‑Commerce Platform: React, Node.js, MongoDB – built responsive storefront\n- Portfolio Dashboard: Next.js, Tailwind, Framer Motion – interactive animations\n- Task Manager App: Redux, Firebase, real-time sync';
+            document.getElementById('inp-education').value = 'B.Sc. Computer Science, University of Indiana\nFull-Stack Web Development Certification (freeCodeCamp)';
         }
         renderCategoryEditor();
     });
